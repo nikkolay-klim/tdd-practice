@@ -40,19 +40,19 @@ class NewVisitorTest(unittest.TestCase):
 
         # When she hits enter, the page updates, and now the page lists
         input_box.send_keys(Keys.ENTER)
-        # "1: Buy peacock feathers" as an item in a to-do list
+        time.sleep(3)
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-
+        # "1: Buy peacock feathers" as an item in a to-do list
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical))
         input_box = self.browser.find_element_by_id('id_new_item')
-        time.sleep(3)
         input_box.send_keys('Use peacock feathers to make a fly')
         input_box.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on her list
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+
+        time.sleep(3)
+        self.check_for_row_in_list_table('5: Use peacock feathers to make a fly')
         # Edith wonders whether the site will remember her list. Then she sees
         # that the site has generated a unique URL for her -- there is some
         # explanatory text to that effect.
