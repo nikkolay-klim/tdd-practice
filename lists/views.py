@@ -3,4 +3,6 @@ from django.shortcuts import render
 
 
 def home_page(request):
-    return HttpResponse('<html><title>To-do lists</title></html>')
+    return render(request, 'lists/templates/home.html', {
+        'new_item_text': request.POST.get('item_text', '')
+    },)
