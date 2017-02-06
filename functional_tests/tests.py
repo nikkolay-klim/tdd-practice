@@ -3,7 +3,6 @@ import time
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -13,6 +12,28 @@ class NewVisitorTest(LiveServerTestCase):
 
     def tearDown(self):
         self.browser.quit()
+
+    def test_layout_and_styling(self):
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She noticed the input box is nicely centered
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            input_box.location['x'] + input_box.size['width'] / 2,
+            512,
+            delta=10
+        )
+        # She starts a new list and sees the input is nicely
+        # centered too
+        input_box.send_keys('testing\n')
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            input_box.location['x'] + input_box.size['width'] / 2,
+            512,
+            delta=10
+        )
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -26,7 +47,7 @@ class NewVisitorTest(LiveServerTestCase):
         # She notices the page title and header mention to-do lists
         self.assertIn('To-do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('To-do', header_text)
+        self.assertIn('To-Do', header_text)
 
         # She is invited to enter a to-do item straight away
         input_box = self.browser.find_element_by_id('id_new_item')
