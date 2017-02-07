@@ -1,16 +1,16 @@
 import time
-
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
 
     def tearDown(self):
+        self.browser.refresh()
         self.browser.quit()
 
     def test_layout_and_styling(self):
@@ -83,6 +83,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # We use a different browser session to make sure that no information
         # of Edith  is coming through from cookies etc
+        self.browser.refresh()
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
